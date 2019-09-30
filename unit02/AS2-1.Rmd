@@ -45,13 +45,10 @@ pacman::p_load(magrittr, d3heatmap)
 
 【1.1】How many rows of data (observations) are in this dataset?
 ```{r}
-#
-<<<<<<< HEAD
+
 D = read.csv("data/mvtWeek1.csv", stringsAsFactors=F)
 nrow(D)
-=======
->>>>>>> fbf0845f3f55bef7a9d91ff2f001f16341d8d812
-#
+
 ```
 
 檢查各欄位的資料格式
