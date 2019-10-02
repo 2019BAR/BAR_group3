@@ -48,37 +48,35 @@ A = read.csv('data/CPSData.csv')
 MetroAreaMap = read.csv("data/MetroAreaCodes.csv")
 CountryMap = read.csv("data/CountryCodes.csv")
 nrow(A)
-#
-#
 ```
 
 __§ 1.2__ Among the interviewees with a value reported for the Industry variable, what is the most common industry of employment? Please enter the name exactly how you see it.
 ```{r}
 table(A$Industry) %>% sort
-#
-#
 ```
+A: Educational and health services
+<br>
 
 __§ 1.3__ Which state has the fewest interviewees?
 ```{r}
 table(A$State) %>% sort %>% head
-#
-#
 ```
+A: New Mexico
+<br>
 
 Which state has the largest number of interviewees?
 ```{r}
 table(A$State) %>% sort %>% tail
-#
-#
 ```
+A: California
+<br>
 
 __§ 1.4__ What proportion of interviewees are citizens of the United States?
 ```{r}
 table(A$Citizenship) %>% prop.table
-#
-#
 ```
+A: 0.942194 (0.88833+0.05387)
+<br>
 
 __§ 1.5__ For which races are there at least 250 interviewees in the CPS dataset of Hispanic ethnicity? (Select all that apply.) 
 
@@ -91,10 +89,11 @@ __§ 1.5__ For which races are there at least 250 interviewees in the CPS datase
 
 ```{r}
 tapply(A$Hispanic, A$Race, sum) %>% sort
-#
-#
 ```
-<br><br><hr>
+A: American Indian, Multiracial, Black, White 
+ 
+
+<br><br>
 
 ###  Section-2 Evaluating Missing Values
 
@@ -117,9 +116,9 @@ __§ 2.1__ Which variables have at least one interviewee with a missing (NA) val
 
 ```{r}
 summary(A)
-#
-#
 ```
+A: MetroAreaCode, Married, Education, EmploymentStatus, Industry 
+<br>
 
 __§ 2.2__  Which is the most accurate:
 
@@ -131,7 +130,6 @@ __§ 2.2__  Which is the most accurate:
 
 ```{r}
 tapply(is.na(A$Married), A$Region, mean)
-#
 ```
 
 
@@ -147,40 +145,41 @@ tapply(is.na(A$Married), A$Age, mean)
 
 ```{r}
 tapply(is.na(A$Married), A$Citizenship, mean)
-#
 ```
+A: The Married variable being missing is related to the Age value for the interviewee.
+<br>
 
 __§ 2.3__ How many states had all interviewees living in a non-metropolitan area (aka they have a missing MetroAreaCode value)? For this question, treat the District of Columbia as a state (even though it is not technically a state).
 ```{r}
 tapply(is.na(A$MetroAreaCode), A$State, mean) %>% sort
-#
-#
 ```
+A: 2, Alaska, Wyoming 
+<br>
 
 How many states had all interviewees living in a metropolitan area? Again, treat the District of Columbia as a state.
 ```{r}
-#
-#
+#3 District of Columbia, New Jersey, Rhode Island 
 ```
 
 __§ 2.4__ Which region of the United States has the largest proportion of interviewees living in a non-metropolitan area?
 ```{r}
 tapply(is.na(A$MetroAreaCode), A$Region, mean) %>% sort
-#
-#
 ```
+A: Midwest
+<br>
 
 __§ 2.5__ Which state has a proportion of interviewees living in a non-metropolitan area closest to 30%?
 ```{r}
-#
-#
+tapply(is.na(A$MetroAreaCode), A$State, mean) %>% sort
 ```
+A: Wisconsin
+<br>
 
 Which state has the largest proportion of non-metropolitan interviewees, ignoring states where all interviewees were non-metropolitan?
 ```{r}
-#
-#
+tapply(is.na(A$MetroAreaCode), A$State, mean) %>% sort %>% tail
 ```
+A: Montana 
 
 <br><br><br>
 
@@ -189,66 +188,56 @@ Which state has the largest proportion of non-metropolitan interviewees, ignorin
 __§ 3.1__ How many observations (codes for metropolitan areas) are there in MetroAreaMap?
 ```{r}
 nrow(MetroAreaMap)
-#
-#
 ```
 
 How many observations (codes for countries) are there in CountryMap?
 ```{r}
 nrow(CountryMap)
-#
-#
 ```
 
 __§ 3.2__ What is the name of the variable that was added to the data frame by the merge() operation?
 ```{r}
 A = merge(A, CountryMap, by.x="CountryOfBirthCode", by.y="Code", all.x=TRUE)
 #all.x=TRUE 所有紀錄都要保留
-#
 ```
 
 ```{r}
 A = merge(A, MetroAreaMap, by.x="MetroAreaCode", by.y="Code", all.x=TRUE)
-#
-#
 ```
 
 How many interviewees have a missing value for the new metropolitan area variable?
 ```{r}
 sum(is.na(A$MetroArea))
-#
-#
 ```
 
 __§ 3.3__ Which metropolitan areas has the largest number of interviewees?
 ```{r}
 table(A$MetroArea) %>% sort %>% tail
-#
-#
 ```
+
+A: New York-Northern New Jersey-Long Island
+<br>
 
 __§ 3.4__ Which metropolitan area has the highest proportion of interviewees of Hispanic ethnicity?
 ```{r}
 tapply(A$Hispanic, A$MetroArea, mean) %>% sort %>% tail
-#
-#
 ```
+A: Laredo, TX
+<br>
 
 __§ 3.5__ Determine the number of metropolitan areas in the United States from which at least 20% of interviewees are Asian.
 ```{r}
 tapply(A$Race == "Asian", A$MetroArea, mean) %>% sort %>% tail
-#
-#
 ```
-
+A: 4
+<br>
 
 __§ 3.6__  Passing na.rm=TRUE to the tapply function, determine which metropolitan area has the smallest proportion of interviewees who have received no high school diploma.
 ```{r}
-tapply(A$Education=='No high school diploma', A$MetroArea, mean, na.rm=T) %>% 
+tapply(A$Education=='No high school diploma', A$MetroArea, mean, na.rm=TRUE) %>% 
   sort %>% head
-#
-#
 ```
+A: Iowa City, IA 
 
 <br><br> 
 
@@ -258,51 +247,48 @@ tapply(A$Education=='No high school diploma', A$MetroArea, mean, na.rm=T) %>%
 
 __§ 4.1__ What is the name of the variable added to the CPS data frame by this merge operation?
 ```{r}
-#
-#
+A = merge(A, CountryMap, by.x="CountryOfBirthCode", by.y="Code", all.x=TRUE)
 ```
+A: Country
+<br>
 
 How many interviewees have a missing value for the new `Country` variable?
 ```{r}
 sum(is.na(A$Country))
-#
-#
 ```
 
 __§ 4.2__ Among all interviewees born outside of North America, which country was the most common place of birth?
 ```{r}
 table(A$Country) %>% sort %>% tail(10)
-#
-#
 ```
+A: Philippines
+<br>
 
 __§ 4.3__ What proportion of the interviewees from the "New York-Northern New Jersey-Long Island, NY-NJ-PA" metropolitan area have a country of birth that is not the United States? 
 ```{r}
 table(A$Country[A$MetroArea=="New York-Northern New Jersey-Long Island, NY-NJ-PA"] == 
   "United States") %>% prop.table
-#
-#
 ```
+A: 0.3087
+<br>
 
 __§ 4.4__ Which metropolitan area has the largest number (note -- not proportion) of interviewees with a country of birth in India? 
 ```{r}
-tapply(A$Country=="India", A$MetroArea, sum) %>% sort %>% tail
-#
-#
+tapply(A$Country=="India", A$MetroArea, sum, na.rm=TRUE) %>% sort %>% tail
 ```
+A: New York-Northern New Jersey-Long Island, NY-NJ-PA
+<br>
 
 In Brazil?
 ```{r}
-tapply(A$Country=="Brazil", A$MetroArea, sum) %>% sort %>% tail
-#
-#
+tapply(A$Country=="Brazil", A$MetroArea, sum, na.rm=TRUE) %>% sort %>% tail
 ```
+A: Boston-Cambridge-Quincy, MA-NH
+<br>
 
 In Somalia?
 ```{r}
-tapply(A$Country=="Somalia", A$MetroArea, sum) %>% sort %>% tail
-#
-#
+tapply(A$Country=="Somalia", A$MetroArea, sum, na.rm=TRUE) %>% sort %>% tail
 ```
-
+A: Minneapolis-St Paul-Bloomington, MN-WI
 <br><br><br>

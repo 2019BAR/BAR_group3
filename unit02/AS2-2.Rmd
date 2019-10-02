@@ -54,10 +54,9 @@ GE = read.csv('data/GEstock.csv')
 PG = read.csv('data/ProcterGambleStock.csv')
 CO = read.csv('data/CocaColastock.csv')
 BOE = read.csv('data/Boeingstock.csv')
-#
-#
 ```
-
+A: 480
+<br>
 
 __§ 1.2__ What is the earliest year in our datasets?
 ```{r}
@@ -67,18 +66,15 @@ PG$Date = as.character(PG$Date) %>% as.Date('%m/%d/%y')
 CO$Date = as.character(CO$Date) %>% as.Date('%m/%d/%y')
 BOE$Date = as.character(BOE$Date) %>% as.Date('%m/%d/%y')
 min(IBM$Date)
-#
-#
-#
-#
 ```
+A: 1970
+<br>
 
 __§ 1.3__ What is the latest year in our datasets?
 ```{r}
 max(IBM$Date)
-#
-#
 ```
+A: 2009
 <br>
 
 <span style="font-size:20px">`r "\U1F4A1"`</span>
@@ -90,52 +86,41 @@ L = list(
   PG = read.csv('data/ProcterGambleStock.csv'),
   CO = read.csv('data/CocaColastock.csv'),
   BOE = read.csv('data/Boeingstock.csv'))
-#
-#
 ```
 
 ```{r}
 for(i in 1:length(L)) {
   L[[i]]$Date = as.character(L[[i]]$Date) %>% as.Date('%m/%d/%y')
   }
-#
-#
 ```
 
 ```{r}
 lapply(L, function(df) range(df$Date))
-#
-#
 ```
 
 __§ 1.4__ What is the mean stock price of IBM over this time period?
 ```{r}
-#
-#
+mean(IBM$StockPrice)
 ```
 
 __§ 1.5__ What is the minimum stock price of General Electric (GE) over this time period?
 ```{r}
-#
-#
+min(GE$StockPrice)
 ```
 
 __§ 1.6__ What is the maximum stock price of Coca-Cola over this time period?
 ```{r}
-#
-#
+max(CO$StockPrice)
 ```
 
 __§ 1.7__ What is the median stock price of Boeing over this time period?
 ```{r}
-#
-#
+median(BOE$StockPrice)
 ```
 
 __§ 1.8__ What is the standard deviation of the stock price of Procter & Gamble over this time period?
 ```{r}
-#
-#
+sd(PG$StockPrice)
 ```
 
 <span style="font-size:20px">`r "\U1F4A1"`</span>
@@ -148,45 +133,65 @@ __§ 1.8__ What is the standard deviation of the stock price of Procter & Gamble
 __§ 2.1__ Around what year did Coca-Cola has its highest stock price in this time period? Around what year did Coca-Cola has its lowest stock price in this time period?
 ```{r}
 plot(CO$Date, CO$StockPrice, type='l')
-#
-#
 ```
-
+A: 1980
+<br>
 
 __§ 2.2__ In March of 2000, the technology bubble burst, and a stock market crash occurred. According to this plot, which company's stock dropped more?
 ```{r}
-plot(IBM$Date, IBM$StockPrice, type='l', col='orange')
-lines(GE$Date, GE$StockPrice, type='l', col='cyan')
-lines(BOE$Date, BOE$StockPrice, type='l', col='pink')
-lines(CO$Date, CO$StockPrice, type='l', col='green')
-lines(PG$Date, PG$StockPrice, type='l', col='blue')
-abline(v=as.Date(c("2000-03-01","1983-01-01","1984-01-01")),col='gray',lty=3)
-#
-#
+plot(IBM$Date[361:372], IBM$StockPrice[361:372], type='l', col='orange',ylim = c(0,210))
+lines(GE$Date[361:372], GE$StockPrice[361:372], type='l', col='cyan')
+lines(BOE$Date[361:372], BOE$StockPrice[361:372], type='l', col='pink')
+lines(CO$Date[361:372], CO$StockPrice[361:372], type='l', col='green')
+lines(PG$Date[361:372], PG$StockPrice[361:372], type='l', col='blue')
+abline(v=as.Date(c("2000-03-01")),col='black',lty=1)
 ```
+A: Procter and Gamble
+<br>
 
 __§ 2.3__ (a) Around 1983, the stock for one of these companies (Coca-Cola or Procter and Gamble) was going up, while the other was going down. Which one was going up? 
 ```{r}
-#
-#
+plot(CO$Date[145:168], CO$StockPrice[145:168], type='l', col='green',ylim = c(0,210))
+lines(PG$Date[145:168], PG$StockPrice[145:168], type='l', col='blue')
+abline(v=as.Date(c("1983-01-01")),col='gray',lty=2)
 ```
+A: Coca-Cola
+<br>
 
 (b) In the time period shown in the plot, which stock generally has lower values?
 ```{r}
-#
-#
+plot(CO$Date, CO$StockPrice, type='l', col='green')
+lines(PG$Date, PG$StockPrice, type='l', col='blue')
 ```
 
+```{r}
+mean(CO$StockPrice)
+mean(PG$StockPrice)
+```
+A: Coca-Cola
 
 <br><hr>
 
 ###  Section-3 Visualizing Stock Dynamics 1995-2005
+```{r}
+plot(CO$Date[301:432], CO$StockPrice[301:432], type="l", col="red", ylim = c(0,210))
+lines(PG$Date[301:432], PG$StockPrice[301:432], type="l", col="blue")
+lines(BOE$Date[301:432], BOE$StockPrice[301:432], type="l", col="yellow")
+lines(GE$Date[301:432], GE$StockPrice[301:432], type="l", col="green")
+lines(IBM$Date[301:432], IBM$StockPrice[301:432], type="l", col="orange")
+```
 
 __§ 3.1__ Which stock fell the most right after the technology bubble burst in March 2000?
 ```{r}
-#
-#
+plot(CO$Date[301:432], CO$StockPrice[301:432], type="l", col="red", ylim = c(0,210))
+lines(PG$Date[301:432], PG$StockPrice[301:432], type="l", col="blue")
+lines(BOE$Date[301:432], BOE$StockPrice[301:432], type="l", col="yellow")
+lines(GE$Date[301:432], GE$StockPrice[301:432], type="l", col="green")
+lines(IBM$Date[301:432], IBM$StockPrice[301:432], type="l", col="orange")
+abline(v=as.Date("2000-03-01"))
 ```
+A: General Electric
+<br>
 
 __§ 3.2__ Which stock reaches the highest value in the time period 1995-2005?
 ```{r}
@@ -197,23 +202,22 @@ lines(BOE$Date, BOE$StockPrice, type='l', col='pink')
 lines(CO$Date, CO$StockPrice, type='l', col='green')
 lines(PG$Date, PG$StockPrice, type='l', col='blue')
 #xlim ylim 是設定範圍
-#
 ```
+A: IBM
+
 
 __§ 3.3__ In October of 1997, there was a global stock market crash that was caused by an economic crisis in Asia. Comparing September 1997 to November 1997, which companies saw a decreasing trend in their stock price? (Select all that apply.)
 ```{r}
 IBM$StockPrice[ IBM$Date %in% as.Date(c("1997-09-01", "1997-11-01")) ]
-#
-#
 ```
 
 ```{r}
 sapply(L, function(df){
   df$StockPrice[ df$Date %in% as.Date(c("1997-09-01", "1997-11-01")) ]
   })
-#
-#
 ```
+A: Procter Gamble and Boeing
+<br>
 
 __§ 3.4__ In the last two years of this time period (2004 and 2005) which stock seems to be performing the best, in terms of increasing stock price?
 ```{r}
@@ -223,11 +227,10 @@ lines(GE$Date, GE$StockPrice, type='l', col='cyan')
 lines(BOE$Date, BOE$StockPrice, type='l', col='pink')
 lines(CO$Date, CO$StockPrice, type='l', col='green')
 lines(PG$Date, PG$StockPrice, type='l', col='blue')
-#
-#
 ```
+A: Boeing
 
-<br><hr>
+<br>
 
 
 ###  Section-4 Monthly Trends
@@ -235,21 +238,25 @@ lines(PG$Date, PG$StockPrice, type='l', col='blue')
 __§ 4.1__ For IBM, compare the monthly averages to the overall average stock price. In which months has IBM historically had a higher stock price (on average)? Select all that apply.
 ```{r}
 tapply(IBM$StockPrice, format(IBM$Date,'%m'), mean)
-#
-#
 ```
+
+
+```{r}
+mean(IBM$StockPrice)
+```
+A: January,February,March,April,May
+<br>
 
 __§ 4.2__ General Electric and Coca-Cola both have their highest average stock price in the same month. Which month is this?
 ```{r}
 tapply(GE$StockPrice, format(GE$Date,'%m'), mean) %>% sort
-#
-#
 ```
-
 
 ```{r}
 tapply(CO$StockPrice, format(CO$Date,'%m'), mean) %>% sort
 ```
+A: April
+<br>
 
 __§ 4.3__ For the months of December and January, every company's average stock is higher in one month and lower in the other. In which month are the stock prices lower?
 ```{r}
@@ -257,8 +264,9 @@ sapply(L, function(df){
   tapply(df$StockPrice, format(df$Date,'%m'), mean)
   })
 #sapply把lapply的輸出變成矩陣
-#
 ```
+A:June, September
+
 <br>
 <p class="wwl">
 <span style="font-size:20px">`r "\U1F4DD"` UNIT2B 學習重點：</span><br>
