@@ -196,13 +196,10 @@ nrow(CountryMap)
 ```
 
 __§ 3.2__ What is the name of the variable that was added to the data frame by the merge() operation?
-```{r}
-A = merge(A, CountryMap, by.x="CountryOfBirthCode", by.y="Code", all.x=TRUE)
-#all.x=TRUE 所有紀錄都要保留
-```
 
 ```{r}
 A = merge(A, MetroAreaMap, by.x="MetroAreaCode", by.y="Code", all.x=TRUE)
+#all.x=TRUE 所有紀錄都要保留
 ```
 
 How many interviewees have a missing value for the new metropolitan area variable?
@@ -274,7 +271,7 @@ A: 0.3087
 
 __§ 4.4__ Which metropolitan area has the largest number (note -- not proportion) of interviewees with a country of birth in India? 
 ```{r}
-tapply(A$Country=="India", A$MetroArea, sum, na.rm=TRUE) %>% sort %>% tail
+tapply(A$Country == "India", A$MetroArea, sum, na.rm=TRUE) %>% sort %>% tail
 ```
 A: New York-Northern New Jersey-Long Island, NY-NJ-PA
 <br>
@@ -292,3 +289,4 @@ tapply(A$Country=="Somalia", A$MetroArea, sum, na.rm=TRUE) %>% sort %>% tail
 ```
 A: Minneapolis-St Paul-Bloomington, MN-WI
 <br><br><br>
+
